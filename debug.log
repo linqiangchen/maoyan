@@ -47,3 +47,4 @@
 [0928/215159.900:ERROR:registration_protocol_win.cc(103)] CreateFile: 系统找不到指定的文件。 (0x2)
 [0928/215200.437:ERROR:registration_protocol_win.cc(103)] CreateFile: 系统找不到指定的文件。 (0x2)
 [0928/215208.910:ERROR:registration_protocol_win.cc(103)] CreateFile: 系统找不到指定的文件。 (0x2)
+[0928/215208.993:ERROR:registration_protocol_win.cc(103)] CreateFile: 系统找不到指定的文件。 (0x2)
