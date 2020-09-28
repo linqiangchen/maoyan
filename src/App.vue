@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div class="header j-s-a">
-      <span></span>
-      <h2 class="t-c">猫眼电影</h2>
+      <span class="j-s-a">
+       <i class="iconfont iconleft"  v-if="show" @click="handleBack"></i></span>
+      <h2 class="t-c">{{title}}</h2>
       <span class="j-s-a">
         <i class="iconfont icontoggle"></i>
       </span>
@@ -32,6 +33,7 @@ export default {
   name: "App",
   data() {
     return {
+      title:'猫眼电影',
       navList: [
         {
           id: 0,
@@ -42,31 +44,54 @@ export default {
         {
           id: 1,
           title: "视频",
-          path: "",
+          path: "/video",
           icon: "iconfont iconvideo",
         },
         {
           id: 2,
           title: "小视频",
-          path: "iconfont",
+          path: "/small",
           icon: "iconfont iconxiaoshipin",
         },
         {
           id: 3,
           title: "我的",
-          path: "",
+          path: "/mine",
           icon: "iconfont iconmy",
         },
       ],
       active: 0,
+      show:true
     };
+  },
+  provide(){
+    return{
+      setTitle:this.setTitle,
+      setBack:this.setBack,
+      showBack:this.showBack
+    }
   },
   methods: {
     handleActive(index) {
       this.active = index;
+      this.$router.push(this.navList[index].path)
     },
+    handleBack(){
+        this.$router.back()
+    },
+    setTitle(str){
+      this.title = str
+    },
+    setBack(cb){
+      this.handleBack = cb
+     
+    },
+    showBack(bool){
+      this.show = bool
+    }
   },
  created(){
+ 
     this.$store.dispatch("home/loadCinemaSelect");
  }
 };

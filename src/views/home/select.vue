@@ -152,6 +152,9 @@ export default {
       typeId: "districtId",
     };
   },
+  created(){
+     this.$store.dispatch("home/loadCinemaSelect");
+  },
   props: ["value"],
   computed: {
     ...mapState({
@@ -271,8 +274,11 @@ export default {
   background-color: #fff;
   position: relative;
   .header-ul {
+   
     height: 100%;
     padding: 10px 0;
+    border-top: 1PX #777 solid;
+    border-bottom: 1PX #777 solid;
     li {
       height: 100%;
       line-height: 20px;
@@ -283,7 +289,7 @@ export default {
       i {
         font-size: 13px;
       }
-      border-right: 1px #777 solid;
+      
     }
     .active {
       color: #f03d37;
@@ -291,7 +297,7 @@ export default {
         transform: rotate(-90deg);
       }
     }
-    border-bottom: 1PX#777 solid;
+
   }
   width: 100%;
   height: 40px;
@@ -315,7 +321,7 @@ export default {
 
       .activeNav {
         color: #f03d37 !important;
-        border-bottom: 2px #f03d37 solid;
+        border-bottom: 2PX  #f03d37 solid;
       }
       li {
         flex: 1;
@@ -431,7 +437,7 @@ export default {
         color: #333;
         height: 44px;
         line-height: 44px;
-        border-bottom: 1px #ccc solid;
+        border-bottom: 1PX #ccc solid;
         i {
           font-size: 15px;
         }
@@ -452,7 +458,7 @@ export default {
     // border: 1px solid #f03d37;
     // }
     .content {
-      height: 276px;
+      height: 277px;
       width: 100%;
       overflow: hidden;
     }
@@ -470,7 +476,7 @@ export default {
           width: 71px;
           height: 38px;
           line-height: 38px;
-          border: 1px #ccc solid;
+          border: 1PX  #ccc solid;
           color: #777;
           border-radius: 5px;
           margin-right: 10px;
@@ -486,7 +492,7 @@ export default {
     }
     ._btn {
       height: 61px;
-      border-top: 1px #ccc solid;
+      border-top: 1PX  #ccc solid;
       span {
         color: #777;
         width: 80px;
@@ -494,12 +500,12 @@ export default {
         font-size: 15px;
         line-height: 36px;
         border-radius: 5px;
-        border: 1px #ccc solid;
+        border: 1PX  #ccc solid;
         text-align: center;
       }
       .sure {
         background: #f03d37;
-        border: 1px solid #f03d37;
+        border: 1PX  solid #f03d37;
         color: #fff;
       }
     }

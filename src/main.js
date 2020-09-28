@@ -7,6 +7,8 @@ import IScrollView from 'vue-iscroll-view'
 import IScroll from 'iscroll'
 import VueLazyload from 'vue-lazyload'
 import plugin from './plugin'
+import { Toast } from 'vant';
+Vue.use(Toast);
 Vue.config.productionTip = false
 Vue.use(IScrollView,IScroll)
 Vue.use(plugin)

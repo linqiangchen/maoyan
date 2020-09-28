@@ -85,6 +85,7 @@
    overflow-y: scroll;
  }
   .j-s-a{
+  
       display: flex;
       justify-content: space-between;
       align-items: center;

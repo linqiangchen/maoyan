@@ -80,6 +80,7 @@ export default {
       showList: (state) => state.home.showMove,
     }),
   },
+  
   created() {
     this.toggleTime();
     this.$store.dispatch("home/loadHotMove");
@@ -93,23 +94,23 @@ export default {
     this.$nextTick(() => {
       this.$refs.playListCat.iscroll.options.scrollX = true;
       this.$refs.playListCat.iscroll.options.scrollY = false;
-      console.log(
-        "this.$refs.playListCat.iscroll.options: ",
-        this.$refs.playListCat.iscroll.options
-      );
+   
       // this.$refs.singerName.iscroll.options.scrollX = true;
     });
   },
+
   methods: {
     toMovieCinema(id){
       this.$store.commit('movie/setMovieId',id)
        this.$store.dispatch('movie/loadMovieInfo',id)
         //  this.$store.dispatch("movie/loadMovieInfo", 1211269);
-      this.$store.dispatch("home/loadMoveCinema", id);
+        
+      this.$store.dispatch("home/loadMoveCinema", {id});
        this.$router.push('/movieInfo')
     },
     toMovie(id){
       this.$store.commit('movie/setMovieId',id)
+      this.$store.dispatch('movie/loadStar')
        this.$store.dispatch('movie/loadMovieInfo',id)
        this.$router.push('/movie')
     },
@@ -134,7 +135,7 @@ export default {
       this.$store.dispatch("home/loadMore", this.offset++);
     },
     log(e) {
-      // console.log(1111);
+      // 
       e.refresh();
     },
   },
@@ -144,7 +145,6 @@ export default {
 <style lang="scss" scoped>
 .hot {
   height: 100%;
-  
 }
 .nav {
   background-color: #fff;
@@ -152,7 +152,7 @@ export default {
   height: 44px;
   font-size: 15px;
   color: #666;
-  border-bottom: 1px solid #666;
+  border-bottom: 1PX  solid #666;
   i {
     font-size: 15px;
     // color: #f03d37;

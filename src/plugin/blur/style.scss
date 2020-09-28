@@ -13,7 +13,7 @@
     height: 100%;
     width: 100%;
     background-position: center center;
-    z-index: -1;
+    // z-index: -1;
 }
 
 .my_mask {
@@ -29,5 +29,5 @@
     background-size: cover;
     background-blend-mode: multiply;
     filter: blur(0px);
-    z-index: -1;
+    // z-index: -1;
 }

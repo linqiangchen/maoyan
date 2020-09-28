@@ -1,5 +1,6 @@
 import axios from 'axios'
 import city from '../module/city'
+import movieDetail from '../../data/movieDetail'
 const uuid = '8346F3C0F7E811EA8A202B28784D5F1E036A5087935B423599D63F01A6CADAB3&optimus_risk_level=71&optimus_code=10'
 const token = 'YqbtZ_gowgRxdeleGuBLaNszTtwAAAAAkgsAAFx09eiSIizSpVlp7RT7CMiet5A7uzGgAwXylHnILTphl_ar0sBuj0NWWPXxitOwLw'
 function getMyDay(){
@@ -26,6 +27,8 @@ export default {
             serviceId:-1,
             hallType:-1,
         },
+        cinemaId:'',
+        cineamDetail:'',
         classics: [],
         topRated: [],
         comingMovie: [],
@@ -83,8 +86,11 @@ export default {
             state.selected[obj.type] = obj.value
         },
         setMovieCinema(state, obj) {
-
+            
             state.movieCinema = obj
+        },
+        setCinemaDetail(state,obj){
+            state.cineamDetail = obj
         }
     },
     actions: {
@@ -221,6 +227,9 @@ export default {
             })
         },
         async loadExpected(context) { //最受期待
+            axios.get('http://localhost:3000/detail?id=9012450').then((res)=>{
+                console.log(res)
+            })
             axios.get('/ajax/mostExpected?ci=30&limit=10&offset=0&token=' + token + '&optimus_uuid=' + uuid).then(res => {
                 let coming = res.data.coming;
                 coming.forEach(item => {
@@ -259,7 +268,7 @@ export default {
                     "img": item.querySelector("img") && item.querySelector("img").src,
                     "discountText": item.querySelector(".discount-label-text") && item.querySelector(".discount-label-text").innerText
                 }));
-                
+                console.log(JSON.stringify(a))
                 context.commit('setCinemas', a)
             })
         },
@@ -272,8 +281,19 @@ export default {
             })
 
 
-        },
 
+        },
+        async loadCinemaDetail(context,id) { //影院详情
+            
+            axios.get('/ajax/cinemaDetail?cinemaId='+id+'&optimus_uuid=8346F3C0F7E811EA8A202B28784D5F1E036A5087935B423599D63F01A6CADAB3&optimus_risk_level=71&optimus_code=10').then(res => {
+                
+                // context.commit('setHotMovie', res.data.movieList)
+                context.commit('setCinemaDetail', res.data)
+              
+            })
+
+
+        },
         async loadClassics(context, offset) { //经典电影
             axios.get('/ajax/moreClassicList?sortId=1&showType=3&limit=10&offset=' + offset + '&optimus_uuid=' + uuid).then(res => {
                 let div = document.createElement("div");
@@ -293,6 +313,7 @@ export default {
 
         async loadHotMove(context) { //
             axios.get('/ajax/movieOnInfoList?token=' + token + '&optimus_uuid=' + uuid).then(res => {
+               
                 res.data.movieList.forEach(item => {
                     item.img = item.img.replace('/w.h', '')
                 })
@@ -309,11 +330,12 @@ export default {
 
         },
 
-        loadMoveCinema(context,id){
-            let day = getMyDay();
+        loadMoveCinema(context,obj){
+            
+            let day =obj.day || getMyDay();
             let {districtId,lineId,hallType,brandId,serviceId,areaId,stationId} = context.state.selected
             axios.post('/ajax/movie',{
-            movieId: id,
+            movieId: obj.id,
             day: day,
             offset: 0,
             limit: 20,
@@ -329,8 +351,13 @@ export default {
             cityId: context.state.cityId,
             optimus_uuid:' 8346F3C0F7E811EA8A202B28784D5F1E036A5087935B423599D63F01A6CADAB3',
             optimus_risk_level: 71,
-            optimus_code: 10,}).then(res =>{   
-                context.commit('setMovieCinema',res.data)
+            optimus_code: 10,}).then(res =>{  
+                if(res.data.code === 406){
+                    context.commit('setMovieCinema',movieDetail)
+                }else{
+                    context.commit('setMovieCinema',movieDetail)
+                }
+               
               
         })     
     },
@@ -351,7 +378,7 @@ export default {
 
         async loadMore(context, offset) {
             let data = await axios.get('/ajax/moreComingList?ci=30&token=YqbtZ_gowgRxdeleGuBLaNszTtwAAAAAkgsAAFx09eiSIizSpVlp7RT7CMiet5A7uzGgAwXylHnILTphl_ar0sBuj0NWWPXxitOwLw&limit=20&movieIds=' + context.state.movieIds.slice(12 * offset, 12 * (offset + 1)).join(','))
-
+            console.log(data)
             let list = data.data.coming
             list.forEach(item => {
                 item.img = item.img.replace('/w.h', '')

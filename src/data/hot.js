@@ -1,6 +1,6 @@
 
 
-{
+export default {
     "coming": [
         {
             "id": 1297973,

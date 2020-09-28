@@ -14,6 +14,11 @@ export default {
     </div>`
         document.body.appendChild(loading)
         Vue.mixin({
+            data(){
+               return{
+                minShowBack:true
+               }
+            },
            methods: {
                $showLoading(){
                 loading.style.display = 'block'
@@ -22,6 +27,13 @@ export default {
                $hideLoading(){
                 loading.style.display = 'none'
                 loading.style.zIndex = -1
+               }
+           },
+           created () {
+               if(this.notShow){
+                   
+                   this.minShowBack = false
+                   
                }
            }
         })

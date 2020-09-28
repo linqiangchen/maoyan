@@ -69,10 +69,10 @@
             
           >
           <ul class="flex">
-          <li v-for="(item , index) in star" :key="index">
-            <img :src="item.avatar" alt="">
-            <p class="name">{{item.cnm}}</p>
-            <p class="desc">{{item.desc}}</p>
+          <li v-for="(item , index) in starList" :key="index">
+            <img :src="item.img" alt="">
+            <p class="name">{{item.name}}</p>
+            <p class="desc">{{item.role}}</p>
           </li>
           </ul>
           </iscroll-view>
@@ -133,8 +133,8 @@ export default {
   created() {
     // this.$store.dispatch("movie/loadMovieInfo", 1211269);
       this.$store.dispatch("movie/loadStar");
-    // console.log(star);
-    // console.log("this.movieId: ", this.movieId);
+    // 
+    // 
     axios
       .get(
         "/asgard/asgardapi/review/realtime/data.json?movieId=" + this.movieId
@@ -158,6 +158,7 @@ export default {
     ...mapState({
       movieInfo: (state) => state.movie.movieInfo,
       movieId: (state) => state.movie.movieId,
+      starList :(state) => state.movie.star,
       //    cityName: (state) => state.home.cityName,
       //   showList: (state) => state.home.comingMovie,
     }),
@@ -281,7 +282,7 @@ export default {
         height: 80px;
         line-height: 80px;
         text-align: center;
-        border-bottom: 1px #ccc solid;
+        border-bottom: 1PX  #ccc solid;
         p {
           .num {
             font-size: 28px;

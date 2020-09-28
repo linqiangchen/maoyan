@@ -111,7 +111,7 @@ export default {
       this.$store.dispatch("home/loadClassics",this.offset);
     },
     log(e) {
-      // console.log(1111);
+      // 
       e.refresh();
     },
   },

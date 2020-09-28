@@ -18,7 +18,7 @@
       </div>
     </div>
    <keep-alive>
-      <router-view></router-view>
+     <router-view></router-view>
    </keep-alive>
     </div>
   
@@ -27,7 +27,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import { mapState } from "vuex";
+import { createLogger, mapState } from "vuex";
 export default {
   name: "Home",
   components: {
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       Index:0,
+      notShow:true,
       navList: [
         {
           id: 0,
@@ -68,12 +69,12 @@ export default {
       //   showList: (state) => state.home.comingMovie,
     }),
   },
-  
+  inject:['setTitle','showBack'],
   created() {
-
+this.showBack(false)
     this.$store.dispatch("home/loadCinemaSelect");
 
- 
+ this.setTitle('猫眼电影')
       // this.$store.dispatch("home/loadComingMovie");
        
       // loadExpected
@@ -81,7 +82,16 @@ export default {
 
   },
   mounted() {
-
+     this.Index = this.navList.findIndex(item => item.path === this.$route.path)
+  },
+  watch:{
+      "$route"(newVal){
+        this.Index = this.navList.findIndex(item => item.path === newVal.path)
+        
+      },
+        minShowBack(newVal){
+          
+        }
   },
   methods: {
    action(index){
@@ -91,6 +101,7 @@ export default {
      }
 
      this.Index = index;
+     
      this.$router.replace(this.navList[index].path)
    }
    

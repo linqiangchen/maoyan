@@ -52,9 +52,9 @@ export default {
       e.refresh();
     },
     to(val){
-      console.log(val);
+      
         const el = this.$refs[val][0]
-        console.log('el: ', el);
+        
         this.$refs.iscroll.iscroll.scrollToElement(el,{})
     },
     selectCity(id,nm){

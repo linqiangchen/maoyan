@@ -6,7 +6,17 @@ export default {
         com:[],
         movieInfo:{},
         star:[],
-        video:[]
+        video:[],
+        movieName:'八百',
+        movieImg:"http://p1.meituan.net/moviemachine/a448ca6a5f4dafb88067722303ca0cfd96002.jpg",
+        plist:'',
+        tacit: [{
+            row:5,
+            column:9
+        }],
+        count:2,
+        price:140,
+        cinema:''
     },
     mutations: {
         setStar(state,arr){
@@ -17,26 +27,41 @@ export default {
         },
         setMovieInfo(state,obj){
             state.movieInfo = obj
+        },
+        setCinema(state,obj){
+            state.cinema = obj
+        },
+        setSelect(state,obj){
+            state.tacit = obj.tacit,
+            state.count = obj.count,
+            state.price = obj.price
+        },
+        setMovieDetail(state,obj){
+            state.movieName = obj.name
+            state.movieImg = obj.movieImg
+            state.plist = obj.plist
         }
     },
     actions: {
-        loadStar(context){
+        loadStar(context,id){
             
-            axios.get('asgard/movie/1277457?$from=canary#').then(res => {//加载演员列表
+            axios.get('http://localhost:3000/data?movieId=' +context.state.movieId).then(res => {//加载演员列表
                 let div = document.createElement("div");
                 div.innerHTML =res.data
-             let star =   [...div.querySelectorAll('.actor-list li')]
+             let star =   [...div.querySelectorAll('.actor')]
               let arr =   star.map(item => ({
-                    img:item.querySelector('img').src,
-                    name:item.querySelector('.name')&&item.querySelector('.name').innerText,
-                    role:item.querySelector('.role')&&item.querySelector('.role').innerText,
+                    img:item.querySelector('img').getAttribute('data-src'),
+                    name:item.querySelector('.name')&&item.querySelector('.name').innerText.trim(),
+                    role:item.querySelector('.role')&&item.querySelector('.role').innerText.trim(),
                 }))
+                
                 context.commit('setStar' ,arr )
-                let video =   [...div.querySelectorAll('.videos-list li')]
+                let video =   [...div.querySelectorAll('.top-list')]
               let arr2 =   video.map(item => ({
                     img:item.querySelector('img').src,
-                   href:'/asgard' + item.querySelector('a').href.split('/asgard')[1],
+                   href:item.querySelector('a').href,
                 }))
+                
                 let comment =  [...div.querySelectorAll('.discussion article')]
                 let arr3 =   comment.map(item => ({
                     avatar:item.querySelector('.avatar').src,

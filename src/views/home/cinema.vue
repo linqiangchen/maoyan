@@ -22,7 +22,7 @@ import { mapState } from 'vuex';
     <iscroll-view class="content" @scrollStart="log" ref="playListCat">
       <div>
         <ul>
-          <li v-for="item in cinemas" :key="item.id">
+          <li v-for="item in cinemas" :key="item.id" @click="toDetail(item.id)">
             <p class="tit">
               <span>{{item.title}}</span>
               <span v-if="item.price" class="price">
@@ -64,6 +64,10 @@ export default {
     mySelect,
   },
   methods: {
+    toDetail(id){
+this.$store.dispatch('home/loadCinemaDetail',id)
+      this.$router.push('/cinemaDetail')
+    },
     handleDone(){
       this.showSelect = false;
               this.$store.dispatch("home/loadCinemas");
@@ -102,7 +106,7 @@ export default {
 
     // this.$store.dispatch("home/loadComingMovie");
     this.$store.dispatch("home/loadCinemas");
-  
+   this.$store.dispatch("home/loadCinemaSelect");
     // loadExpected
     // loadComingMovie
   },
@@ -154,7 +158,7 @@ export default {
       margin-right: 5px;
         display: inline-block;
         padding: 2px 4px;
-        border-radius: 2px;;
+        border-radius: 2PX;;
       }
       .allowRefund {
          
